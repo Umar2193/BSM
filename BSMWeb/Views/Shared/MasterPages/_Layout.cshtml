@@ -1,0 +1,52 @@
+﻿@using Newtonsoft.Json
+@using BSMWeb.Models
+@{
+
+    var userJson = Context.Session["User"].ToString();
+    var user = JsonConvert.DeserializeObject<Employee>(userJson);
+    
+
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        @ViewBag.Title
+    </title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="BlackFlib Theme" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keyword" content="Template, Theme, Responsive, Fluid, Retina" />
+    @Html.Partial("~/Views/Shared/Sections/_StyleSheet.cshtml")
+    @RenderSection("PageStyle", false)
+    @Html.Partial("~/Views/Shared/Sections/_JavaScriptTop.cshtml")
+</head>
+<body>
+    <section id="container">
+        @Html.Partial("~/Views/Shared/Sections/_Header.cshtml")
+        @if (user.UserType == (int)UserType.BMSUSER)
+        {
+            @Html.Partial("~/Views/Shared/Sections/_Sidebar.cshtml")
+        }
+        else if (user.UserType == (int)UserType.BSMMAN)
+        {
+            @Html.Partial("~/Views/Shared/Sections/_SidebarManager.cshtml")
+        }
+        else
+        {
+            @Html.Partial("~/Views/Shared/Sections/_SidebarAdmin.cshtml")
+        }
+
+        @RenderBody()
+        @Html.Partial("~/Views/Shared/Sections/_Footer.cshtml")
+    </section>
+    @Html.Partial("~/Views/Shared/Sections/_JavaScriptBottom.cshtml")
+    @RenderSection("PageJavaScript", false)
+    <script src="~/Content/Scripts/bsm.js" ></script>
+</body>
+</html>

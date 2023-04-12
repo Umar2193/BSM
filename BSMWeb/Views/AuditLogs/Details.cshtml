@@ -1,0 +1,51 @@
+﻿@model BSMWeb.Models.AuditLog
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/MasterPages/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AuditLog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AuditDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuditDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActionTaken)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActionTaken)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AuditLogId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

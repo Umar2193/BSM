@@ -1,0 +1,567 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BSMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="AuditLogId" />
+          </Key>
+          <Property Name="AuditLogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReviewerName" Type="varchar" MaxLength="100" />
+          <Property Name="AuditDate" Type="date" />
+          <Property Name="ActionTaken" Type="varchar(max)" />
+          <Property Name="Comments" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="100" />
+          <Property Name="DepartmentTypeId" Type="int" />
+          <Property Name="DepartmrntStatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="DepartmentType">
+          <Key>
+            <PropertyRef Name="DepartmentTypeId" />
+          </Key>
+          <Property Name="DepartmentTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentTypeName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="200" />
+          <Property Name="LastName" Type="varchar" MaxLength="200" />
+          <Property Name="JobTitleId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="EmployeeStatus" Type="bit" />
+          <Property Name="Username" Type="nvarchar(max)" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="UserType" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployeeTraining">
+          <Key>
+            <PropertyRef Name="EmployeeTrainingId" />
+          </Key>
+          <Property Name="EmployeeTrainingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="SkillsId" Type="int" />
+          <Property Name="TrainingId" Type="int" />
+          <Property Name="AcquiredOn" Type="smalldatetime" />
+          <Property Name="ExpiresOn" Type="smalldatetime" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="CompletedTimestamp" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="JobTitle">
+          <Key>
+            <PropertyRef Name="JobTitleId" />
+          </Key>
+          <Property Name="JobTitleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobTitleName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Periodicity">
+          <Key>
+            <PropertyRef Name="PeriodicityId" />
+          </Key>
+          <Property Name="PeriodicityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PeriodicityName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="SkillsId" />
+          </Key>
+          <Property Name="SkillsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SkillsDescription" Type="varchar" MaxLength="200" />
+          <Property Name="PeriodicityId" Type="int" />
+          <Property Name="QMNumber" Type="varchar" MaxLength="100" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="SkillStatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="Training">
+          <Key>
+            <PropertyRef Name="TrainingId" />
+          </Key>
+          <Property Name="TrainingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainingDescription" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Department_DepartmentId_Skills_DepartmentId">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Skills" Type="Self.Skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Skills">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentType_DepartmentTypeId_Department_DepartmentTypeId">
+          <End Role="DepartmentType" Type="Self.DepartmentType" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentType">
+              <PropertyRef Name="DepartmentTypeId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="DepartmentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_EmployeeId_EmployeeTraining_EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="EmployeeTraining" Type="Self.EmployeeTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeTraining">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Periodicity_PeriodicityId_Skills_PeriodicityId">
+          <End Role="Periodicity" Type="Self.Periodicity" Multiplicity="0..1" />
+          <End Role="Skills" Type="Self.Skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodicity">
+              <PropertyRef Name="PeriodicityId" />
+            </Principal>
+            <Dependent Role="Skills">
+              <PropertyRef Name="PeriodicityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skills_SkillsId_EmpTraining_SkillsId">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="0..1" />
+          <End Role="EmployeeTraining" Type="Self.EmployeeTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillsId" />
+            </Principal>
+            <Dependent Role="EmployeeTraining">
+              <PropertyRef Name="SkillsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Training_TrainingId_EmpTraining_TrainingId">
+          <End Role="Training" Type="Self.Training" Multiplicity="0..1" />
+          <End Role="EmployeeTraining" Type="Self.EmployeeTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="TrainingId" />
+            </Principal>
+            <Dependent Role="EmployeeTraining">
+              <PropertyRef Name="TrainingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BSMModelStoreContainer">
+          <EntitySet Name="AuditLog" EntityType="Self.AuditLog" Schema="bsm" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="bsm" store:Type="Tables" />
+          <EntitySet Name="DepartmentType" EntityType="Self.DepartmentType" Schema="bsm" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="bsm" store:Type="Tables" />
+          <EntitySet Name="EmployeeTraining" EntityType="Self.EmployeeTraining" Schema="bsm" store:Type="Tables" />
+          <EntitySet Name="JobTitle" EntityType="Self.JobTitle" Schema="bsm" store:Type="Tables" />
+          <EntitySet Name="Periodicity" EntityType="Self.Periodicity" Schema="bsm" store:Type="Tables" />
+          <EntitySet Name="Skills" EntityType="Self.Skills" Schema="bsm" store:Type="Tables" />
+          <EntitySet Name="Training" EntityType="Self.Training" Schema="bsm" store:Type="Tables" />
+          <AssociationSet Name="FK_Department_DepartmentId_Skills_DepartmentId" Association="Self.FK_Department_DepartmentId_Skills_DepartmentId">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentType_DepartmentTypeId_Department_DepartmentTypeId" Association="Self.FK_DepartmentType_DepartmentTypeId_Department_DepartmentTypeId">
+            <End Role="DepartmentType" EntitySet="DepartmentType" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_EmployeeId_EmployeeTraining_EmployeeId" Association="Self.FK_Employee_EmployeeId_EmployeeTraining_EmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeTraining" EntitySet="EmployeeTraining" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Periodicity_PeriodicityId_Skills_PeriodicityId" Association="Self.FK_Periodicity_PeriodicityId_Skills_PeriodicityId">
+            <End Role="Periodicity" EntitySet="Periodicity" />
+            <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skills_SkillsId_EmpTraining_SkillsId" Association="Self.FK_Skills_SkillsId_EmpTraining_SkillsId">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="EmployeeTraining" EntitySet="EmployeeTraining" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Training_TrainingId_EmpTraining_TrainingId" Association="Self.FK_Training_TrainingId_EmpTraining_TrainingId">
+            <End Role="Training" EntitySet="Training" />
+            <End Role="EmployeeTraining" EntitySet="EmployeeTraining" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BSMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentTypeId" Type="Int32" />
+          <Property Name="DepartmrntStatus" Type="Boolean" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Department_DepartmentId_Employee_DepartmentId" FromRole="Department" ToRole="Employee" />
+          <NavigationProperty Name="Skills" Relationship="Self.FK_Department_DepartmentId_Skills_DepartmentId" FromRole="Department" ToRole="Skills" />
+          <NavigationProperty Name="DepartmentType" Relationship="Self.FK_DepartmentType_DepartmentTypeId_Department_DepartmentTypeId" FromRole="Department" ToRole="DepartmentType" />
+        </EntityType>
+        <EntityType Name="DepartmentType">
+          <Key>
+            <PropertyRef Name="DepartmentTypeId" />
+          </Key>
+          <Property Name="DepartmentTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK_DepartmentType_DepartmentTypeId_Department_DepartmentTypeId" FromRole="DepartmentType" ToRole="Department" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="JobTitleId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="EmployeeStatus" Type="Boolean" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_Department_DepartmentId_Employee_DepartmentId" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="EmployeeTrainings" Relationship="Self.FK_Employee_EmployeeId_EmployeeTraining_EmployeeId" FromRole="Employee" ToRole="EmployeeTraining" />
+          <NavigationProperty Name="JobTitle" Relationship="Self.FK_JobTitle_JobTitleId_Employee_JobTitleId" FromRole="Employee" ToRole="JobTitle" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="EmployeeTraining">
+          <Key>
+            <PropertyRef Name="EmployeeTrainingId" />
+          </Key>
+          <Property Name="EmployeeTrainingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="SkillsId" Type="Int32" />
+          <Property Name="TrainingId" Type="Int32" />
+          <Property Name="AcquiredOn" Type="DateTime" Precision="0" />
+          <Property Name="ExpiresOn" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_EmployeeId_EmployeeTraining_EmployeeId" FromRole="EmployeeTraining" ToRole="Employee" />
+          <NavigationProperty Name="Skill" Relationship="Self.FK_Skills_SkillsId_EmpTraining_SkillsId" FromRole="EmployeeTraining" ToRole="Skills" />
+          <NavigationProperty Name="Training" Relationship="Self.FK_Training_TrainingId_EmpTraining_TrainingId" FromRole="EmployeeTraining" ToRole="Training" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
+          <Property Name="CompletedTimestamp" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="JobTitle">
+          <Key>
+            <PropertyRef Name="JobTitleId" />
+          </Key>
+          <Property Name="JobTitleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobTitleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_JobTitle_JobTitleId_Employee_JobTitleId" FromRole="JobTitle" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Periodicity">
+          <Key>
+            <PropertyRef Name="PeriodicityId" />
+          </Key>
+          <Property Name="PeriodicityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PeriodicityName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Skills" Relationship="Self.FK_Periodicity_PeriodicityId_Skills_PeriodicityId" FromRole="Periodicity" ToRole="Skills" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="SkillsId" />
+          </Key>
+          <Property Name="SkillsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SkillsDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PeriodicityId" Type="Int32" />
+          <Property Name="QMNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="SkillStatus" Type="Boolean" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_Department_DepartmentId_Skills_DepartmentId" FromRole="Skills" ToRole="Department" />
+          <NavigationProperty Name="EmployeeTrainings" Relationship="Self.FK_Skills_SkillsId_EmpTraining_SkillsId" FromRole="Skills" ToRole="EmployeeTraining" />
+          <NavigationProperty Name="Periodicity" Relationship="Self.FK_Periodicity_PeriodicityId_Skills_PeriodicityId" FromRole="Skills" ToRole="Periodicity" />
+        </EntityType>
+        <EntityType Name="Training">
+          <Key>
+            <PropertyRef Name="TrainingId" />
+          </Key>
+          <Property Name="TrainingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeTrainings" Relationship="Self.FK_Training_TrainingId_EmpTraining_TrainingId" FromRole="Training" ToRole="EmployeeTraining" />
+        </EntityType>
+        <Association Name="FK_Department_DepartmentId_Employee_DepartmentId">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_DepartmentId_Skills_DepartmentId">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Skills" Type="Self.Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Skills">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentType_DepartmentTypeId_Department_DepartmentTypeId">
+          <End Role="DepartmentType" Type="Self.DepartmentType" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentType">
+              <PropertyRef Name="DepartmentTypeId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="DepartmentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_EmployeeId_EmployeeTraining_EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="EmployeeTraining" Type="Self.EmployeeTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeTraining">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobTitle_JobTitleId_Employee_JobTitleId">
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skills_SkillsId_EmpTraining_SkillsId">
+          <End Role="Skills" Type="Self.Skill" Multiplicity="0..1" />
+          <End Role="EmployeeTraining" Type="Self.EmployeeTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillsId" />
+            </Principal>
+            <Dependent Role="EmployeeTraining">
+              <PropertyRef Name="SkillsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Training_TrainingId_EmpTraining_TrainingId">
+          <End Role="Training" Type="Self.Training" Multiplicity="0..1" />
+          <End Role="EmployeeTraining" Type="Self.EmployeeTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="TrainingId" />
+            </Principal>
+            <Dependent Role="EmployeeTraining">
+              <PropertyRef Name="TrainingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Periodicity_PeriodicityId_Skills_PeriodicityId">
+          <End Role="Periodicity" Type="Self.Periodicity" Multiplicity="0..1" />
+          <End Role="Skills" Type="Self.Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodicity">
+              <PropertyRef Name="PeriodicityId" />
+            </Principal>
+            <Dependent Role="Skills">
+              <PropertyRef Name="PeriodicityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BSMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="DepartmentTypes" EntityType="Self.DepartmentType" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="EmployeeTrainings" EntityType="Self.EmployeeTraining" />
+          <EntitySet Name="JobTitles" EntityType="Self.JobTitle" />
+          <EntitySet Name="Periodicities" EntityType="Self.Periodicity" />
+          <EntitySet Name="Skills" EntityType="Self.Skill" />
+          <EntitySet Name="Trainings" EntityType="Self.Training" />
+          <AssociationSet Name="FK_Department_DepartmentId_Employee_DepartmentId" Association="Self.FK_Department_DepartmentId_Employee_DepartmentId">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Department_DepartmentId_Skills_DepartmentId" Association="Self.FK_Department_DepartmentId_Skills_DepartmentId">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentType_DepartmentTypeId_Department_DepartmentTypeId" Association="Self.FK_DepartmentType_DepartmentTypeId_Department_DepartmentTypeId">
+            <End Role="DepartmentType" EntitySet="DepartmentTypes" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_EmployeeId_EmployeeTraining_EmployeeId" Association="Self.FK_Employee_EmployeeId_EmployeeTraining_EmployeeId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeTraining" EntitySet="EmployeeTrainings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobTitle_JobTitleId_Employee_JobTitleId" Association="Self.FK_JobTitle_JobTitleId_Employee_JobTitleId">
+            <End Role="JobTitle" EntitySet="JobTitles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skills_SkillsId_EmpTraining_SkillsId" Association="Self.FK_Skills_SkillsId_EmpTraining_SkillsId">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="EmployeeTraining" EntitySet="EmployeeTrainings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Training_TrainingId_EmpTraining_TrainingId" Association="Self.FK_Training_TrainingId_EmpTraining_TrainingId">
+            <End Role="Training" EntitySet="Trainings" />
+            <End Role="EmployeeTraining" EntitySet="EmployeeTrainings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Periodicity_PeriodicityId_Skills_PeriodicityId" Association="Self.FK_Periodicity_PeriodicityId_Skills_PeriodicityId">
+            <End Role="Periodicity" EntitySet="Periodicities" />
+            <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+          <EntitySet Name="AuditLogs" EntityType="BSMModel.AuditLog" />
+        </EntityContainer>
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="AuditLogId" />
+          </Key>
+          <Property Name="AuditLogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReviewerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AuditDate" Type="DateTime" Precision="0" />
+          <Property Name="ActionTaken" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BSMModelStoreContainer" CdmEntityContainer="BSMEntities">
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="BSMModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentTypeId" ColumnName="DepartmentTypeId" />
+                <ScalarProperty Name="DepartmrntStatus" ColumnName="DepartmrntStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartmentTypes">
+            <EntityTypeMapping TypeName="BSMModel.DepartmentType">
+              <MappingFragment StoreEntitySet="DepartmentType">
+                <ScalarProperty Name="DepartmentTypeId" ColumnName="DepartmentTypeId" />
+                <ScalarProperty Name="DepartmentTypeName" ColumnName="DepartmentTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="BSMModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="EmployeeStatus" ColumnName="EmployeeStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeTrainings">
+            <EntityTypeMapping TypeName="BSMModel.EmployeeTraining">
+              <MappingFragment StoreEntitySet="EmployeeTraining">
+                <ScalarProperty Name="CompletedTimestamp" ColumnName="CompletedTimestamp" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="EmployeeTrainingId" ColumnName="EmployeeTrainingId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="SkillsId" ColumnName="SkillsId" />
+                <ScalarProperty Name="TrainingId" ColumnName="TrainingId" />
+                <ScalarProperty Name="AcquiredOn" ColumnName="AcquiredOn" />
+                <ScalarProperty Name="ExpiresOn" ColumnName="ExpiresOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobTitles">
+            <EntityTypeMapping TypeName="BSMModel.JobTitle">
+              <MappingFragment StoreEntitySet="JobTitle">
+                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+                <ScalarProperty Name="JobTitleName" ColumnName="JobTitleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Periodicities">
+            <EntityTypeMapping TypeName="BSMModel.Periodicity">
+              <MappingFragment StoreEntitySet="Periodicity">
+                <ScalarProperty Name="PeriodicityId" ColumnName="PeriodicityId" />
+                <ScalarProperty Name="PeriodicityName" ColumnName="PeriodicityName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="BSMModel.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="SkillsId" ColumnName="SkillsId" />
+                <ScalarProperty Name="SkillsDescription" ColumnName="SkillsDescription" />
+                <ScalarProperty Name="PeriodicityId" ColumnName="PeriodicityId" />
+                <ScalarProperty Name="QMNumber" ColumnName="QMNumber" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="SkillStatus" ColumnName="SkillStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainings">
+            <EntityTypeMapping TypeName="BSMModel.Training">
+              <MappingFragment StoreEntitySet="Training">
+                <ScalarProperty Name="TrainingId" ColumnName="TrainingId" />
+                <ScalarProperty Name="TrainingDescription" ColumnName="TrainingDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuditLogs">
+            <EntityTypeMapping TypeName="BSMModel.AuditLog">
+              <MappingFragment StoreEntitySet="AuditLog">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ActionTaken" ColumnName="ActionTaken" />
+                <ScalarProperty Name="AuditDate" ColumnName="AuditDate" />
+                <ScalarProperty Name="ReviewerName" ColumnName="ReviewerName" />
+                <ScalarProperty Name="AuditLogId" ColumnName="AuditLogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

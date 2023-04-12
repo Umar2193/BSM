@@ -1,0 +1,86 @@
+﻿@model BSMWeb.Models.EmployeeTraining
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/MasterPages/_Layout.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h3>
+            Employee Training
+        </h3>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="title">
+                            Detail
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.AcquiredOn)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.AcquiredOn)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.ExpiresOn)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.ExpiresOn)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Employee.FirstName)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Employee.FirstName)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Employee.LastName)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Employee.LastName)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Skill.SkillsDescription)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Skill.SkillsDescription)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Training.TrainingDescription)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Training.TrainingDescription)
+                                </dd>
+
+                            </dl>
+                        </div>
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeTrainingId }) |
+                            @Html.ActionLink("Back to List", "Index")
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+

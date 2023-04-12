@@ -1,0 +1,48 @@
+﻿@model BSMWeb.Models.Training
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/MasterPages/_LayoutAdmin.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h3>
+            Trainings
+        </h3>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="title">
+                            Detail
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+
+                        <div>
+                            
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.TrainingDescription)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.TrainingDescription)
+                                </dd>
+
+                            </dl>
+                        </div>
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.TrainingId }) |
+                            @Html.ActionLink("Back to List", "Index")
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+

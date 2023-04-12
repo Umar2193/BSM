@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bfd5032f77f94460b3744f99593890e3" Name="Diagram1">
+        <EntityTypeShape EntityType="BSMModel.Department" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BSMModel.DepartmentType" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BSMModel.Employee" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BSMModel.EmployeeTraining" Width="1.5" PointX="10.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BSMModel.JobTitle" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BSMModel.Periodicity" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BSMModel.Skill" Width="1.5" PointX="8.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BSMModel.Training" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="BSMModel.FK_Department_DepartmentId_Employee_DepartmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="BSMModel.FK_Department_DepartmentId_Skills_DepartmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="BSMModel.FK_DepartmentType_DepartmentTypeId_Department_DepartmentTypeId" ManuallyRouted="false" />
+        <AssociationConnector Association="BSMModel.FK_Employee_EmployeeId_EmployeeTraining_EmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="BSMModel.FK_JobTitle_JobTitleId_Employee_JobTitleId" ManuallyRouted="false" />
+        <AssociationConnector Association="BSMModel.FK_Skills_SkillsId_EmpTraining_SkillsId" ManuallyRouted="false" />
+        <AssociationConnector Association="BSMModel.FK_Training_TrainingId_EmpTraining_TrainingId" ManuallyRouted="false" />
+        <AssociationConnector Association="BSMModel.FK_Periodicity_PeriodicityId_Skills_PeriodicityId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BSMModel.AuditLog" Width="1.5" PointX="0.75" PointY="6.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

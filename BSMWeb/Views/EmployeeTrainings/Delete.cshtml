@@ -1,0 +1,86 @@
+﻿@model BSMWeb.Models.EmployeeTraining
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/MasterPages/_LayoutAdmin.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h3>
+            Are you sure you want to delete this?
+        </h3>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="title">
+                            Delete Employee Training
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        
+                        <div>
+                            
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.AcquiredOn)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.AcquiredOn)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.ExpiresOn)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.ExpiresOn)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Employee.FirstName)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Employee.FirstName)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Skill.SkillsDescription)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Skill.SkillsDescription)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Training.TrainingDescription)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Training.TrainingDescription)
+                                </dd>
+
+                            </dl>
+
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-actions no-color">
+                                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                                    @Html.ActionLink("Back to List", "Index")
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+

@@ -1,0 +1,79 @@
+﻿@model BSMWeb.Models.Skill
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/MasterPages/_Layout.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h3>
+            Skills
+        </h3>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="title">
+                            Detail
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.SkillsDescription)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.SkillsDescription)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.QMNumber)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.QMNumber)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.SkillStatus)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.SkillStatus)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Department.DepartmentName)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Department.DepartmentName)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Periodicity.PeriodicityName)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Periodicity.PeriodicityName)
+                                </dd>
+
+                            </dl>
+                        </div>
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.SkillsId }) |
+                            @Html.ActionLink("Back to List", "Index")
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
