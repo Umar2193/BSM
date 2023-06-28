@@ -98,7 +98,7 @@ public class SkillsController : Controller
 		var departmentId = (from Id in db.Departments
 							where Id.DepartmentTypeId == (int?)deptTypeId
 							select new { Id.DepartmentId, Id.DepartmentName }).ToList();
-		base.ViewBag.DepartmentId = new SelectList(departmentId, "DepartmentId", "DepartmentName");
+		base.ViewBag.DepartmentId = new SelectList(departmentId, "DepartmentId", "DepartmentName",skill.DepartmentId);
 		base.ViewBag.PeriodicityId = new SelectList(db.Periodicities, "PeriodicityId", "PeriodicityName", skill.PeriodicityId);
 		return View(skill);
 	}

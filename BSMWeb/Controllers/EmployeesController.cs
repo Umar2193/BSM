@@ -10,7 +10,7 @@ using BSMDataAccess;
 using BSMWeb.Helpers;
 using BSMWeb.Models;
 
-[MemberAuthorize(new UserType[] { UserType.BSMADMIN })]
+[MemberAuthorize(new UserType[] { UserType.BSMADMIN,UserType.BSMMAN })]
 public class EmployeesController : Controller
 {
 	private BSMEntities db = new BSMEntities();
@@ -46,7 +46,7 @@ public class EmployeesController : Controller
 	}
 
 	[HttpGet]
-	[MemberAuthorize(new UserType[] { UserType.BSMADMIN })]
+	[MemberAuthorize(new UserType[] { UserType.BSMADMIN,UserType.BSMMAN })]
 	public ActionResult Create()
 	{
 		int[] array = (from Id in db.DepartmentTypes
@@ -68,7 +68,7 @@ public class EmployeesController : Controller
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	[MemberAuthorize(new UserType[] { UserType.BSMADMIN })]
+	[MemberAuthorize(new UserType[] { UserType.BSMADMIN, UserType.BSMMAN })]
 	public ActionResult Create([Bind(Include = "EmployeeId,FirstName,LastName,JobTitleId,DepartmentId,EmployeeStatus")] Employee employee)
 	{
 		if (base.ModelState.IsValid)
@@ -86,7 +86,7 @@ public class EmployeesController : Controller
 	}
 
 	[HttpGet]
-	[MemberAuthorize(new UserType[] { UserType.BSMADMIN })]
+	[MemberAuthorize(new UserType[] { UserType.BSMADMIN, UserType.BSMMAN })]
 	public ActionResult Edit(int? id)
 	{
 		if (!id.HasValue)
@@ -117,7 +117,7 @@ public class EmployeesController : Controller
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	[MemberAuthorize(new UserType[] { UserType.BSMADMIN })]
+	[MemberAuthorize(new UserType[] { UserType.BSMADMIN, UserType.BSMMAN })]
 	public ActionResult Edit([Bind(Include = "EmployeeId,FirstName,LastName,JobTitleId,DepartmentId,EmployeeStatus")] Employee employee)
 	{
 		if (base.ModelState.IsValid)

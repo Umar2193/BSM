@@ -9,7 +9,7 @@ using BSMDataAccess;
 using BSMWeb.Helpers;
 using BSMWeb.Models;
 
-[MemberAuthorize(new UserType[] { UserType.BSMADMIN })]
+[MemberAuthorize(new UserType[] { UserType.BSMADMIN, UserType.BSMMAN })]
 public class DepartmentsController : Controller
 {
 	private BSMEntities db = new BSMEntities();
@@ -45,7 +45,7 @@ public class DepartmentsController : Controller
 	}
 
 	[HttpGet]
-	[MemberAuthorize(new UserType[] { UserType.BSMADMIN })]
+	[MemberAuthorize(new UserType[] { UserType.BSMADMIN, UserType.BSMMAN })]
 	public ActionResult Create()
 	{
 		base.ViewBag.DepartmentTypeId = new SelectList(db.DepartmentTypes, "DepartmentTypeId", "DepartmentTypeName");
@@ -54,7 +54,7 @@ public class DepartmentsController : Controller
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	[MemberAuthorize(new UserType[] { UserType.BSMADMIN })]
+	[MemberAuthorize(new UserType[] { UserType.BSMADMIN, UserType.BSMMAN })]
 	public ActionResult Create([Bind(Include = "DepartmentId,DepartmentName,DepartmentTypeId,DepartmrntStatus")] Department department)
 	{
 		if (base.ModelState.IsValid)
@@ -70,7 +70,7 @@ public class DepartmentsController : Controller
 		return View(department);
 	}
 
-	[MemberAuthorize(new UserType[] { UserType.BSMADMIN })]
+	[MemberAuthorize(new UserType[] { UserType.BSMADMIN, UserType.BSMMAN })]
 	public ActionResult Edit(int? id)
 	{
 		if (!id.HasValue)
@@ -88,7 +88,7 @@ public class DepartmentsController : Controller
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	[MemberAuthorize(new UserType[] { UserType.BSMADMIN })]
+	[MemberAuthorize(new UserType[] { UserType.BSMADMIN, UserType.BSMMAN })]
 	public ActionResult Edit([Bind(Include = "DepartmentId,DepartmentName,DepartmentTypeId,DepartmrntStatus")] Department department)
 	{
 		if (base.ModelState.IsValid)
